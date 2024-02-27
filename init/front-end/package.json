@@ -1,0 +1,19 @@
+{
+  "name": "fabrikot-meme-ory",
+  "version": "1.0.0",
+  "description": "A memory game based on memes ¯\\(ツ)\\/¯.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "/\\/web-01"
+  },
+  "author": "",
+  "license": "ISC",
+  "private": true,
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  }
+}
