@@ -1,5 +1,9 @@
 // TODO #import-router: use ES named imports to import the router
+import {Router} from "./router";
 // TODO #import-components: use ES named imports to import WelcomeComponent, GameComponent a ScoreComponent
+import {WelcomeComponent} from "./welcome";
+import {GameComponent} from "./game";
+import {ScoreComponent} from "./score";
 // TODO #import-css: use ES side-effect imports to import styles/style.css
 
 const outlet = document.querySelector("#content-outlet");
