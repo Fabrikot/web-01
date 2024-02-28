@@ -3,7 +3,7 @@ const path = require("path");
   module.exports = {
     mode: "development",
     devtool: "inline-source-map",
-    entry: "./src/app/scripts/main.js",
+    entry: "./src/main.js",
     devServer: {
       static: {
         directory: path.join(__dirname),
@@ -19,6 +19,11 @@ const path = require("path");
       minimize: false,
     },
     module: {
-      rules: [],
-    },
+        rules: [
+          {
+            test: /\.(css)$/,
+            use: ["style-loader", "css-loader"],
+        },
+      ],
+    }
   };    
