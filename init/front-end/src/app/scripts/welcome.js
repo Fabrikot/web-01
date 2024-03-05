@@ -1,16 +1,11 @@
-  // TODO #class: use the ES6 class keyword
   import template from "../views/welcome.html"
-
+  import {Component} from "./component"
   /* class WelcomeComponent constructor  */
-  export class WelcomeComponent {
+  export class WelcomeComponent extends Component{
     constructor() {
-      this.template = template;
+      super(template);
     }
 
-    // TODO #extends: call super(template)
-
-
-    // TODO #class: turn function into a method of WelcomeComponent
     /* method WelcomeComponent.init */
     init() {
       var form = document.querySelector("form.form-signin");
@@ -27,7 +22,7 @@
               var name = event.srcElement.querySelector("#nickname").value;
               var size = parseInt(event.srcElement.querySelector("#size").value);
 
-              _startGame(name, size);
+              this._startGame(name, size);
             }
           }.bind(this),
           false
@@ -36,11 +31,7 @@
       return this;
     };
 
-    // TODO #class: turn function into a method of WelcomeComponent
-    function
-
     _startGame(name, size) {
-      // TODO #spa: replace with './#game'
       var gamePage = "./#game";
       // TODO #template-literals:  use template literals (backquotes)
       window.location = gamePage + "?name=" + name + "&size=" + size;

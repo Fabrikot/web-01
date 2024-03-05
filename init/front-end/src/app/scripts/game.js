@@ -11,6 +11,7 @@ import card6 from "/src/assets/cards/card-6.png";
 import card7 from "/src/assets/cards/card-7.png";
 import card8 from "/src/assets/cards/card-8.png";
 import card9 from "/src/assets/cards/card-9.png";
+import {Component} from "./component"
 
 var CARD_TEMPLATE = ""
   .concat('<main class="card-cmp">')
@@ -26,15 +27,12 @@ var CARD_TEMPLATE = ""
     },
   };
 
-  // TODO #class: use the ES6 class keyword
-  // TODO #extends: extend Component
   /* class GameComponent constructor */
-  export class GameComponent {
-    // TODO #extends: call super(template)
+  export class GameComponent extends Component{
     // gather parameters from URL
     constructor() {
       var params = parseUrl();
-      this.template = template;
+      super(template)
       // save player name & game ize
       this._name = params.name;
       this._size = parseInt(params.size) || 9;
@@ -231,14 +229,12 @@ var CARD_TEMPLATE = ""
       card9,
     ];
 
-  // TODO #extends: extends Component
   /* class CardComponent constructor */
-  class CardComponent {
-    // TODO #extends: call super(CARD_TEMPLATE)
+  class CardComponent extends Component{
     // is this card flipped?
     constructor(id){
+      super(CARD_TEMPLATE)
       this._flipped = false;
-      this.template = CARD_TEMPLATE;
 
       // has the matching card has been discovered already?
       this.matched = false;

@@ -1,22 +1,21 @@
 import template from "../views/score.html"
 import {parseUrl} from "./utils"
-  // TODO #class: use the ES6 class keyword
+import {Component} from "./component"
+
   /* class ScoreComponent constructor */
-  export class ScoreComponent {
-    // TODO #extends: call super(template)
+  export class ScoreComponent extends Component{
     constructor() {
       var params = parseUrl();
-      this.template=template;
+      super(template)
       this.name = params.name;
       this.size = parseInt(params.size);
       this.time = parseInt(params.time);
     }
-  }
 
-  // TODO #class: turn function into a method of ScoreComponent
-  /* method ScoreComponent.init */
-  ScoreComponent.prototype.init = function init() {
-    document.getElementById("name").innerText = this.name;
-    document.getElementById("size").innerText = this.size;
-    document.getElementById("time").innerText = this.time;
-  };
+    /* method ScoreComponent.init */
+    init() {
+      document.getElementById("name").innerText = this.name;
+      document.getElementById("size").innerText = this.size;
+      document.getElementById("time").innerText = this.time;
+    };
+  }
