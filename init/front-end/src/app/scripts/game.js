@@ -11,7 +11,7 @@ import card6 from "/src/assets/cards/card-6.png";
 import card7 from "/src/assets/cards/card-7.png";
 import card8 from "/src/assets/cards/card-8.png";
 import card9 from "/src/assets/cards/card-9.png";
-import {Component} from "./component"
+import {Component} from "./component";
 
 var CARD_TEMPLATE = ""
   .concat('<main class="card-cmp">')
@@ -53,33 +53,26 @@ var CARD_TEMPLATE = ""
             // create cards out of the config
             this._cards = [];
             // TODO #functional-programming: use Array.map() instead.
-            for (var i in this._config.ids) {
+            for (let i in this._config.ids) {
               this._cards[i] = new CardComponent(this._config.ids[i]);
             }
 
             // TODO #functional-programming: use Array.forEach() instead.
-            // TODO #let-const: replace var with let.
-            for (var i in this._cards) {
-              var card = this._cards[i];
+            for (let i in this._cards) {
+              const card = this._cards[i];
 
-              // TODO #let-const: extract function _appendCard (ie: copy its body here and remove the function)
-              this._appendCard(card);
+              this._boardElement.appendChild(card.getElement());
+
+              card.getElement().addEventListener(
+                  "click",
+                  // TODO #arrow-function: use arrow function instead.
+                  function () {
+                    this._flipCard(card);
+                  }.bind(this)
+              );
             }
 
             this.start();
-          }.bind(this)
-      );
-    };
-
-    /* method GameComponent._appendCard */
-    _appendCard(card) {
-      this._boardElement.appendChild(card.getElement());
-
-      card.getElement().addEventListener(
-          "click",
-          // TODO #arrow-function: use arrow function instead.
-          function () {
-            this._flipCard(card);
           }.bind(this)
       );
     };
@@ -135,7 +128,7 @@ var CARD_TEMPLATE = ""
 
     /* method GameComponent.goToScore */
     goToScore() {
-      var timeElapsedInSeconds = Math.floor(
+      const timeElapsedInSeconds = Math.floor(
           (Date.now() - this._startTime) / 1000
       );
       clearInterval(this._timer);
@@ -144,7 +137,7 @@ var CARD_TEMPLATE = ""
           // TODO #arrow-function: use arrow function instead.
           function () {
             // TODO #spa: replace with './#score'
-            var scorePage = "./#score";
+            const scorePage = "./#score";
             // TODO #template-literals:  use template literals (backquotes)
             window.location =
                 scorePage +
@@ -215,7 +208,7 @@ var CARD_TEMPLATE = ""
   }
   // TODO #card-component: Change images location to /app/components/game/card/assets/***.png
   // TODO #import-assets: use ES default import to import images.
-    var CARDS_IMAGE = [
+    const CARDS_IMAGE = [
       back,
       card0,
       card1,
