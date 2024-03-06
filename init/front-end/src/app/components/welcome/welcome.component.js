@@ -1,5 +1,6 @@
-  import template from "../views/welcome.html"
-  import {Component} from "./component";
+  import template from "../welcome/welcome.component.html"
+  import {Component} from "../../scripts/component";
+    import "./welcome.component.css";
   /* class WelcomeComponent constructor  */
   export class WelcomeComponent extends Component{
     constructor() {
