@@ -1,30 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
+<head>
+    <meta charset="UTF-8"/>
     <title>MÈME ory</title>
-    <!-- TODO #npm-bootstrap: change css location to '/node_modules/bootstrap/dist/css/bootstrap.css' -->
-    <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.css" />
-    <link rel="stylesheet" href="/src/app/styles/style.css" />
-    <!-- TODO #card-component: add link to a new './card/card.component.css' file -->
+    <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.css"/>
+    <link rel="stylesheet" href="/src/app/styles/style.css"/>
 
-
-    <!-- link to game controller -->
     <script src="../../scripts/utils.js"></script>
     <script src="./game.component.js"></script>
-  </head>
+</head>
 
-  <body>
-
-        <!-- TODO #shell: keep this element -->
-        <main class="game-cmp">
-          <div class="cards"></div>
-        </main>
-
+<body>
+    <main class="game-cmp">
+        <div class="cards"></div>
+    </main>
     <script>
-      (function () {
-        new GameComponent().init();
-      })();
+        (function () {
+            new GameComponent().init();
+        })();
     </script>
-  </body>
+</body>
 </html>
