@@ -18,8 +18,7 @@ swaggerJSDoc(config.swagger)
 const scores = [];
 
 // populate scores with random scores
-scores.push({name: 'Alexis', time: _.random(999, true), size: _.random(0, 12)});
-scores.push({name: 'Nicolas', time: _.random(999, true), size: _.random(0, 12)});
+scores.push({name: 'Imbattable King', size: 9, time: 6});
 
 // used to parse body request
 app.use(express.json())

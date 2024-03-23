@@ -6,6 +6,54 @@
     /* When the animation is finished, start again */
     animation-iteration-count: infinite;
 }
+.happy{
+        margin: 0 20px 0 0;
+}
+
+
+
+.congrats {
+    font-size: 3em;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    position: relative;
+    z-index: 1;
+    animation: slide-in-left 1s ease-out forwards;
+    margin:0 50px;
+}
+
+.congrats::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #cb2468;
+    transform: skewX(-25deg);
+    z-index: -1;
+    animation: slide-in-right 1s ease-out forwards;
+
+}
+
+@keyframes slide-in-left {
+    from {
+        transform: translateX(-100%);
+    }
+    to {
+        transform: translateX(0);
+    }
+}
+
+@keyframes slide-in-right {
+    from {
+        transform: skewX(-25deg) translateX(100%);
+    }
+    to {
+        transform: skewX(-25deg) translateX(0);
+    }
+}
 
 @keyframes shake {
     0% {
@@ -41,4 +89,31 @@
     100% {
         transform: translate(1px, -2px) rotate(-3deg);
     }
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+th {
+    background-color: #cb2468;
+    color: #fff;
+    font-weight: bold;
+    padding: 12px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+td {
+    padding: 8px;
+    border: 1px solid #ddd;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+tr:hover {
+    background-color: #ddd;
 }
