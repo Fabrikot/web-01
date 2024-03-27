@@ -30,17 +30,40 @@ export class ScoreComponent extends Component {
             }
         });
         let cols = Object.keys(getscore[0]);
-        let thead = document.createElement("thead");
-        let tr = document.createElement("tr");
-
+        let head = document.createElement("tr");
         cols.forEach((item) => {
-            let th = document.createElement("th");
-            th.innerText = item;
-            tr.appendChild(th);
+            let td = document.createElement("th");
+            td.innerText = item;
+            head.appendChild(td);
         });
-        thead.appendChild(tr); // Append the header row to the header
-        highscore.append(tr) // Append the header to the table
+        highscore.appendChild(head) // Append the header to the table
+        let filter = document.getElementById("filter-select");
 
+        filter.addEventListener("change", (event) => {
+            let valfilter = parseInt(filter.value)
+            let getscore_filter
+            if (valfilter !== 0){
+                console.log(valfilter)
+                getscore_filter= getscore.filter(function(score){
+                    console.log(score.size)
+                    return (score.size === valfilter) ? score : undefined
+                })
+            }else{
+                getscore_filter=getscore;
+            }
+            highscore.innerHTML = ""; // Clear
+            highscore.appendChild(head); // Re-append the header
+            getscore_filter.forEach(score => {
+                const row = document.createElement("tr");
+                row.id="score"
+                row.innerHTML = `
+            <td>${score.name}</td>
+            <td>${score.size}</td>
+            <td>${score.time}</td>
+    `;
+                highscore.appendChild(row);
+            });
+        });
         getscore.forEach(score => {
             const row = document.createElement("tr");
             row.innerHTML = `

@@ -7,10 +7,13 @@
     animation-iteration-count: infinite;
 }
 .happy{
-        margin: 0 20px 0 0;
+    margin: 0 20px 0 0;
 }
-
-
+.filter{
+    margin: 0 20px 0 0;
+    width: 30%;
+    height: 20%;
+}
 
 .congrats {
     font-size: 3em;
@@ -90,13 +93,14 @@
         transform: translate(1px, -2px) rotate(-3deg);
     }
 }
-table {
-    width: 100%;
+.table {
+    width: 20%;
     border-collapse: collapse;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
 
 th {
+    width: 100%;
     background-color: #cb2468;
     color: #fff;
     font-weight: bold;
