@@ -2,6 +2,7 @@ import {Component} from "../../scripts/component";
 import {parseUrl} from "../../scripts/utils";
 import {CardComponent} from "./card/card.component";
 import template from "./game.component.html";
+import * as localforage from "localforage/dist/localforage";
 import "./game.component.css";
 
 var CARD_TEMPLATE = ""
@@ -35,23 +36,40 @@ export class GameComponent extends Component {
 
     async init() {
         // fetch the cards configuration from the server
-        this._config = await this.fetchConfig();
-        this._boardElement = document.querySelector(".cards");
-        // create cards out of the config
         this._cards = [];
-        this._cards = this._config.ids.map((id) => new CardComponent(id));
+        this._boardElement = document.querySelector(".cards");
+        let configid= await localforage.getItem("configId").then()
+        let paires_retournées= await localforage.getItem("tab_save").then()
 
-        this._cards.forEach(card => {
+        if(!(configid==null)){
+            console.log("Recup "+ configid)
+            this._cards=configid.map(ID => new CardComponent(ID));
+            console.log("Recup "+ this._cards)
+            if (!(paires_retournées==null)) {
+                paires_retournées.forEach(paire_id => {
+                    this._cards.forEach(card => {
+                        if ((card._id == paire_id) && (card._flipped == false)) {
+                            this._flipCard(card)
+                        }
+                    })
+                })
+            }
+
+        }else{
+            this._config = await this.fetchConfig();
+            // create cards out of the config
+            this._cards =this._config.ids.map(ID => new CardComponent(ID));
+            localforage.setItem("configId",this._config.ids)
+            console.log("Crea" + this._cards )
+        }
+
+        this._cards.forEach((card) => {
             this._boardElement.appendChild(card.getElement());
-            card.getElement().addEventListener(
-                "click",
-                () => {
-                    this._flipCard(card);
-                }
-            );
+            card.getElement().addEventListener("click", () => {
+                this._flipCard(card)
+            })
         })
         this.start();
-
     };
 
     /* method GameComponent.start */
@@ -68,6 +86,8 @@ export class GameComponent extends Component {
 
     /* method GameComponent.fetchConfig */
     fetchConfig(cb) {
+        localforage.setItem("Player",this._name)
+        localforage.setItem("boardsize",this._size)
         return fetch(`${environment.api.host}/board?size=${this._size}`).then(
             (r) => r.json()
         );
@@ -75,6 +95,7 @@ export class GameComponent extends Component {
 
     /* method GameComponent.goToScore */
     goToScore() {
+        localforage.clear()
         const timeElapsedInSeconds = Math.floor(
             (Date.now() - this._startTime) / 1000
         );
@@ -89,7 +110,7 @@ export class GameComponent extends Component {
     };
 
     /* method GameComponent._flipCard */
-    _flipCard(card) {
+    async _flipCard(card) {
         if (this._busy) {
             return;
         }
@@ -114,6 +135,17 @@ export class GameComponent extends Component {
                 card.matched = true;
                 this._matchedPairs += 1;
 
+                await localforage.getItem("tab_save").then(result =>{
+                    if (!(result==null)){
+                        result.push(card._id);
+                        localforage.setItem("tab_save",result);
+                    }
+                    else{
+                        result=[]
+                        result.push(card._id)
+                        localforage.setItem("tab_save",result)
+                    }
+                })
                 // reset flipped card for the next turn.
                 this._flippedCard = null;
 

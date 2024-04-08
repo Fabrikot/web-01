@@ -18,7 +18,7 @@ export class ScoreComponent extends Component {
         document.getElementById("name").innerText = this.name;
         document.getElementById("size").innerText = this.size;
         document.getElementById("time").innerText = this.time;
-        //await this.postScore(this.name,this.size,this.time)
+        await this.postScore(this.name,this.size,this.time)
         let getscore = await this.getScores()
 
         let highscore = document.getElementById("highscore");
