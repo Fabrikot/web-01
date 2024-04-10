@@ -38,27 +38,33 @@ export class GameComponent extends Component {
         // fetch the cards configuration from the server
         this._cards = [];
         this._boardElement = document.querySelector(".cards");
-        let configid= await localforage.getItem("configId").then()
-        let paires_retournées= await localforage.getItem("tab_save").then()
+        let configid= await localforage.getItem("configId")
+        let paires_retournées= await localforage.getItem("tab_save")
 
         if(!(configid==null)){
             console.log("Recup "+ configid)
             this._cards=configid.map(ID => new CardComponent(ID));
-            console.log("Recup "+ this._cards)
+
             if (!(paires_retournées==null)) {
-                paires_retournées.forEach(paire_id => {
-                    this._cards.forEach(card => {
-                        if ((card._id == paire_id) && (card._flipped == false)) {
-                            this._flipCard(card)
-                        }
-                    })
+                console.log(paires_retournées)
+
+                //paires_retournées.sort((a,b)=>a.id-b.id)
+                this._cards.forEach(card =>{
+                    if((paires_retournées.includes(card._id))){
+                        card.flip();
+                    }
                 })
-            }
+                this._matchedPairs=paires_retournées.length;
+                if (this._matchedPairs === this._size) {
+                    await localforage.getItem("starttemps").then(temps => {
+                        this.goToScore(temps);
+                    })
+                }            }
 
         }else{
             this._config = await this.fetchConfig();
             // create cards out of the config
-            this._cards =this._config.ids.map(ID => new CardComponent(ID));
+            this._cards =this._config.ids.map(ID => new CardComponent(ID, CARD_TEMPLATE));
             localforage.setItem("configId",this._config.ids)
             console.log("Crea" + this._cards )
         }
@@ -73,9 +79,17 @@ export class GameComponent extends Component {
     };
 
     /* method GameComponent.start */
-    start() {
-        this._startTime = Date.now();
-        var seconds = 0;
+    async start() {
+        let seconds;
+        let temps = await localforage.getItem("starttemps")
+        if (!(temps==null)){
+            this._startTime = temps
+            seconds = (Date.now() - this._startTime) / 1000;
+        } else {
+            this._startTime = Date.now();
+            localforage.setItem("starttemps", this._startTime)
+            seconds = 0;
+        }
         document.querySelector("nav .navbar-title").textContent = `Player: ${this._name}. Elapsed time: ${seconds++}`;
 
         this._timer = setInterval(() => {
@@ -85,7 +99,7 @@ export class GameComponent extends Component {
     };
 
     /* method GameComponent.fetchConfig */
-    fetchConfig(cb) {
+    fetchConfig() {
         localforage.setItem("Player",this._name)
         localforage.setItem("boardsize",this._size)
         return fetch(`${environment.api.host}/board?size=${this._size}`).then(
@@ -94,10 +108,10 @@ export class GameComponent extends Component {
     };
 
     /* method GameComponent.goToScore */
-    goToScore() {
+    goToScore(temps) {
         localforage.clear()
         const timeElapsedInSeconds = Math.floor(
-            (Date.now() - this._startTime) / 1000
+            (Date.now() - temps) / 1000
         );
         clearInterval(this._timer);
 
@@ -137,7 +151,9 @@ export class GameComponent extends Component {
 
                 await localforage.getItem("tab_save").then(result =>{
                     if (!(result==null)){
-                        result.push(card._id);
+                        if(!result.includes(card._id)){
+                            result.push(card._id);
+                        }
                         localforage.setItem("tab_save",result);
                     }
                     else{
@@ -150,7 +166,9 @@ export class GameComponent extends Component {
                 this._flippedCard = null;
 
                 if (this._matchedPairs === this._size) {
-                    this.goToScore();
+                    await localforage.getItem("starttemps").then(temps => {
+                        this.goToScore(temps);
+                        })
                 }
             } else {
                 this._busy = true;
