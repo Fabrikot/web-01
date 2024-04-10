@@ -10,6 +10,20 @@ import card6 from "./assets/cards/card-6.png";
 import card7 from "./assets/cards/card-7.png";
 import card8 from "./assets/cards/card-8.png";
 import card9 from "./assets/cards/card-9.png";
+
+import card10 from "./assets/cards2/card-0.PNG";
+import card11 from "./assets/cards2/card-1.png";
+import card12 from "./assets/cards2/card-2.png";
+import card13 from "./assets/cards2/card-3.png";
+import card14 from "./assets/cards2/card-6.png";
+import card15 from "./assets/cards2/card-4.png";
+import card16 from "./assets/cards2/card-5.png";
+import card17 from "./assets/cards2/card-7.png";
+import card18 from "./assets/cards2/card-8.png";
+import card19 from "./assets/cards2/card-9.png";
+
+
+
 import CARD_TEMPLATE from "./card.component.html";
 
 import "./card.component.css";
@@ -26,6 +40,16 @@ const CARDS_IMAGE = [
     card7,
     card8,
     card9,
+    card10,
+    card11,
+    card12,
+    card13,
+    card14,
+    card15,
+    card16,
+    card17,
+    card18,
+    card19
 ];
 
 export class CardComponent extends Component {

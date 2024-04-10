@@ -25,6 +25,7 @@ permettant ainsi d'ensurer que tous les utilisateurs du projet téléchargent la
 Une **devDependency** est une **dépendance** utilisée uniquement lors du **développement** et non nécessaire pour l'exécution du code 
 en production.
 <br>Les dépendances normales (dependencies) sont, elles, requises pour le fonctionnement de l'application.
+
 4. >What is a closure/iife ? What was it used for ? What replaced it?
 
 Une **closure** (fermeture) est une fonction qui a accès à ses propres variables ainsi qu'aux variables de son contexte parent

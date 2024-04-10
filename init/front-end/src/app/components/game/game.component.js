@@ -5,14 +5,6 @@ import template from "./game.component.html";
 import * as localforage from "localforage/dist/localforage";
 import "./game.component.css";
 
-var CARD_TEMPLATE = ""
-    .concat('<main class="card-cmp">')
-    .concat('  <div class="card-wrapper">')
-    .concat('    <img class="card front-face" alt="card" />')
-    .concat('    <img class="card back-face" alt="card" />')
-    .concat("  </div>")
-    .concat("</main>");
-
 var environment = {
     api: {
         host: "http://localhost:8081",
@@ -27,6 +19,7 @@ export class GameComponent extends Component {
         super(template)
         // save player name & game ize
         this._name = params.name;
+        this._newmeme= params.newmeme;
         this._size = parseInt(params.size) || 9;
         this._flippedCard = null;
         this._matchedPairs = 0;
@@ -41,9 +34,10 @@ export class GameComponent extends Component {
         let configid= await localforage.getItem("configId")
         let paires_retournées= await localforage.getItem("tab_save")
 
+
         if(!(configid==null)){
             console.log("Recup "+ configid)
-            this._cards=configid.map(ID => new CardComponent(ID));
+            this._cards=configid.map(ID => new CardComponent(ID+parseInt((this._newmeme))));
 
             if (!(paires_retournées==null)) {
                 console.log(paires_retournées)
@@ -59,12 +53,12 @@ export class GameComponent extends Component {
                     await localforage.getItem("starttemps").then(temps => {
                         this.goToScore(temps);
                     })
-                }            }
-
+                }
+            }
         }else{
             this._config = await this.fetchConfig();
             // create cards out of the config
-            this._cards =this._config.ids.map(ID => new CardComponent(ID, CARD_TEMPLATE));
+            this._cards =this._config.ids.map(ID => new CardComponent(ID+parseInt(this._newmeme)));
             localforage.setItem("configId",this._config.ids)
             console.log("Crea" + this._cards )
         }

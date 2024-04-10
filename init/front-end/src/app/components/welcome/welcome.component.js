@@ -12,7 +12,7 @@
     /* method WelcomeComponent.init */
     init() {
       const form = document.querySelector("form.form-signin");
-
+      const checkbox = document.getElementById('newmeme');
       form.addEventListener(
           "submit",
           (event) => {
@@ -21,10 +21,12 @@
               event.stopPropagation();
               form.classList.add("was-validated");
             } else {
+
               const name = event.srcElement.querySelector("#nickname").value;
               const size = parseInt(event.srcElement.querySelector("#size").value);
+              const newMeme = checkbox.checked ? 10 : 0;
 
-              this._startGame(name, size);
+              this._startGame(name, size,newMeme);
             }
           },
           false
@@ -32,7 +34,7 @@
       return this;
     };
 
-    async _startGame(name, size) {
+    async _startGame(name, size,newMeme) {
         const gamePage = "./#game";
         let nom_joueur_existant = await localforage.getItem("Player")
         let size_existant = await localforage.getItem("boardsize")
@@ -40,7 +42,7 @@
             window.location = `${gamePage}?name=${nom_joueur_existant}&size=${size_existant}`
         } else {
             localforage.clear()
-            window.location = `${gamePage}?name=${name}&size=${size}`;
+            window.location = `${gamePage}?name=${name}&size=${size}&newmeme=${newMeme}`;
         }
     }
   }
