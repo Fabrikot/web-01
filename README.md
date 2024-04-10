@@ -148,4 +148,9 @@ Une seule branche main push mais la méthodologie appliquée fut de développer 
 
 ## Bonus
 
-1 et 2 réalisés
+1 et 2 réalisés : 
+* Sauvegarde dans le local storage des informations de session (temps, nbcartes, état_cartes) & système de chargement de partie
+* Tableau de scores final avec filtres par nombre de cartes
+
+Bonus 3 ? ... à découvrir
+![image](https://github.com/Fabrikot/web-01/assets/107400688/6588eaa0-fec0-464c-a7c8-f48c14eb39cb)
